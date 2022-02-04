@@ -28,6 +28,14 @@ class TestODESolver(unittest.TestCase):
         max_error = np.max(np.abs(u_sol/self.u_closed - 1))
         self.assertLess(max_error, 0.01, 'Produce wrong solution for mid-point method')
 
+    def test_rk4(self):
+        """
+        Test (Runge-Kutta) rk4 method
+        """
+        u_sol = ode_solve(self.f, self.u0, dt=0.02, num_step=10, method='rk4').reshape(-1)
+        max_error = np.max(np.abs(u_sol/self.u_closed - 1))
+        self.assertLess(max_error, 1e-3, 'Produce wrong solution for Runge-Kutta rk4 method')
+
     def test_newton_method(self):
         """
         Test Newton (iterative) method for solving x: g(x) = 0
